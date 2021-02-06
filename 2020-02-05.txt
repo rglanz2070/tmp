@@ -1,0 +1,619 @@
+no service pad
+service timestamps debug datetime msec
+service timestamps log datetime msec
+no service password-encryption
+!
+hostname c2960-DG02
+!
+boot-start-marker
+boot-end-marker
+!
+enable secret 5 $1$P5d7$DxezfUKd4WFFabpu5Fvsh.
+!
+no aaa new-model
+system mtu routing 1500
+vtp domain vtp-test
+vtp mode transparent
+ip subnet-zero
+!
+!
+mls qos srr-queue output cos-map queue 1 threshold 3  5
+mls qos srr-queue output cos-map queue 2 threshold 3  3 6 7
+mls qos srr-queue output cos-map queue 3 threshold 3  2 4
+mls qos srr-queue output cos-map queue 4 threshold 2  1
+mls qos srr-queue output cos-map queue 4 threshold 3  0
+!
+crypto pki trustpoint TP-self-signed-2790047104
+ enrollment selfsigned
+ subject-name cn=IOS-Self-Signed-Certificate-2790047104
+ revocation-check none
+ rsakeypair TP-self-signed-2790047104
+!
+!
+crypto pki certificate chain TP-self-signed-2790047104
+ certificate self-signed 01
+  30820243 308201AC A0030201 02020101 300D0609 2A864886 F70D0101 04050030 
+  31312F30 2D060355 04031326 494F532D 53656C66 2D536967 6E65642D 43657274 
+  69666963 6174652D 32373930 30343731 3034301E 170D3933 30333031 30303030 
+  35345A17 0D323030 31303130 30303030 305A3031 312F302D 06035504 03132649 
+  4F532D53 656C662D 5369676E 65642D43 65727469 66696361 74652D32 37393030 
+  34373130 3430819F 300D0609 2A864886 F70D0101 01050003 818D0030 81890281 
+  8100BC91 9EAD69A5 18F72E64 25E48381 99D73E0B 4BAEEEF3 43C7127F 683EFA07 
+  37AC5691 D5BD9F23 55707B96 BFB6E7FC 3A20910D C298ACA9 7D0637A9 9CD7EEFA 
+  C36E211D 69E75B9F 784F8716 C6C88AEC C1C577E4 9E3FD194 31E40EC8 53C36C36 
+  0B20FC69 6CF9E79D C4D81F80 6D66F4BE 17AB2917 7C06AA4D DFC375CA 25691B60 
+  ADA90203 010001A3 6B306930 0F060355 1D130101 FF040530 030101FF 30160603 
+  551D1104 0F300D82 0B633239 36302D44 4730322E 301F0603 551D2304 18301680 
+  14F94AD9 E81D0C79 736EA17B 175AB578 B637E67A AD301D06 03551D0E 04160414 
+  F94AD9E8 1D0C7973 6EA17B17 5AB578B6 37E67AAD 300D0609 2A864886 F70D0101 
+  04050003 8181004A E4223D47 88608471 FA11C816 E51E7780 12061021 215A253D 
+  A64EEA03 FB46D290 6D9FEB1E 17F5463F 8575E1E2 9F8A9276 89829F29 8AE4E87B 
+  DBDC82D4 55BC82AE 55C8D87D 5F010215 FA87DA0A 657335E2 17C84A75 141A2550 
+  610EDB48 BC1ED524 C4E9C903 75D604E3 9176F19E CAEBB578 9633E91C 4EE1FA14 
+  EC6B982E 4F46FC
+  quit
+!
+!
+!
+!
+!
+!
+spanning-tree mode rapid-pvst
+spanning-tree extend system-id
+!
+vlan internal allocation policy ascending
+!
+vlan 2
+ name Management
+!
+vlan 3
+ name Test
+!
+vlan 5
+ name Router
+!
+vlan 6
+ name EG
+!
+vlan 7
+ name VoIP
+!
+vlan 9
+ name VLAN09
+!
+vlan 11
+ name NLB-Storage
+!
+vlan 12
+ name NLB
+!
+vlan 13 
+!
+vlan 20
+ name LUH-EG
+!
+vlan 21
+ name LUH-1-Stock
+!
+vlan 22
+ name LUH-2-Stock
+!
+vlan 23
+ name LUH-3-Stock
+!
+vlan 24
+ name DG
+!
+vlan 25
+ name Zubau
+!
+vlan 26
+ name Wattgasse
+!
+vlan 29
+ name Drucker
+!
+vlan 48,50,70 
+!
+vlan 71
+ name Techniker-Netz
+!
+vlan 72
+ name RSA
+!
+vlan 73
+ name Switches-LUH
+!
+vlan 80
+ name dmz-fw
+!
+vlan 81
+ name dmz3
+!
+vlan 91
+ name NextLayer-altes-ak
+!
+vlan 100
+ name outside
+!
+vlan 101-102 
+!
+vlan 103
+ name VLAN103
+!
+vlan 104
+ name Telefonanlage
+!
+vlan 105
+ name OeCZsdsl
+!
+vlan 106
+ name XIP_Internet
+!
+vlan 107
+ name UPC_SDSL
+!
+vlan 108
+ name Juca-Clienten
+!
+vlan 109
+ name NextLayer
+!
+vlan 110
+ name Juca-Clienten-A1
+!
+vlan 111
+ name Bettenverwaltung
+!
+vlan 120
+ name Mocca
+!
+vlan 130
+ name Backup
+!
+vlan 140
+ name Mail
+!
+vlan 141
+ name Exchange-clu
+!
+vlan 150
+ name WLAN-LUH-Admin
+!
+vlan 151
+ name WLAN-LUH-User
+!
+vlan 152
+ name WLAN-LUH-Gast
+!
+vlan 154
+ name WLAN-EDWMobile
+!
+vlan 160
+ name UPCKabel
+!
+vlan 161
+ name glanz1
+!
+vlan 162
+ name glanz2
+!
+vlan 163
+ name glanz3
+!
+vlan 164
+ name glanz4
+!
+vlan 165
+ name glanz5
+!
+vlan 170
+ name Vewa
+!
+vlan 180
+ name Fidelio
+!
+vlan 190
+ name Intrexx
+!
+vlan 200
+ name vornet-caritas
+!
+vlan 210
+ name VOIP-2015
+!
+vlan 247
+ name UPC_Outside
+!
+vlan 248
+ name UPC_Inside
+!
+vlan 1111
+ name public1111
+!
+!
+!
+interface FastEthernet0/1
+ description Host/IP Phone
+ switchport access vlan 24
+ switchport mode access
+ switchport voice vlan 7
+ switchport port-security maximum 3
+ switchport port-security
+ switchport port-security aging time 2
+ switchport port-security violation restrict
+ switchport port-security aging type inactivity
+ mls qos trust cos
+ spanning-tree portfast
+ spanning-tree bpduguard enable
+!
+interface FastEthernet0/2
+ description Host/IP Phone
+ switchport access vlan 24
+ switchport mode access
+ switchport voice vlan 7
+ switchport port-security maximum 3
+ switchport port-security
+ switchport port-security aging time 2
+ switchport port-security violation restrict
+ switchport port-security aging type inactivity
+ mls qos trust cos
+ spanning-tree portfast
+ spanning-tree bpduguard enable
+!
+interface FastEthernet0/3
+ description Host/IP Phone
+ switchport access vlan 24
+ switchport mode access
+ switchport voice vlan 7
+ switchport port-security maximum 3
+ switchport port-security
+ switchport port-security aging time 2
+ switchport port-security violation restrict
+ switchport port-security aging type inactivity
+ mls qos trust cos
+ spanning-tree portfast
+ spanning-tree bpduguard enable
+!
+interface FastEthernet0/4
+ description Host/IP Phone
+ switchport access vlan 24
+ switchport mode access
+ switchport voice vlan 7
+ switchport port-security maximum 3
+ switchport port-security
+ switchport port-security aging time 2
+ switchport port-security violation restrict
+ switchport port-security aging type inactivity
+ mls qos trust cos
+ spanning-tree portfast
+ spanning-tree bpduguard enable
+!
+interface FastEthernet0/5
+ description Host/IP Phone
+ switchport access vlan 24
+ switchport mode access
+ switchport voice vlan 7
+ switchport port-security maximum 3
+ switchport port-security
+ switchport port-security aging time 2
+ switchport port-security violation restrict
+ switchport port-security aging type inactivity
+ mls qos trust cos
+ spanning-tree portfast
+ spanning-tree bpduguard enable
+!
+interface FastEthernet0/6
+ description Host/IP Phone
+ switchport access vlan 24
+ switchport mode access
+ switchport voice vlan 7
+ switchport port-security maximum 3
+ switchport port-security
+ switchport port-security aging time 2
+ switchport port-security violation restrict
+ switchport port-security aging type inactivity
+ mls qos trust cos
+ spanning-tree portfast
+ spanning-tree bpduguard enable
+!
+interface FastEthernet0/7
+ description Host/IP Phone
+ switchport access vlan 24
+ switchport mode access
+ switchport voice vlan 7
+ switchport port-security maximum 3
+ switchport port-security
+ switchport port-security aging time 2
+ switchport port-security violation restrict
+ switchport port-security aging type inactivity
+ mls qos trust cos
+ spanning-tree portfast
+ spanning-tree bpduguard enable
+!
+interface FastEthernet0/8
+ description Host/IP Phone
+ switchport access vlan 24
+ switchport mode access
+ switchport voice vlan 7
+ switchport port-security maximum 3
+ switchport port-security
+ switchport port-security aging time 2
+ switchport port-security violation restrict
+ switchport port-security aging type inactivity
+ mls qos trust cos
+ spanning-tree portfast
+ spanning-tree bpduguard enable
+!
+interface FastEthernet0/9
+ description Host/IP Phone
+ switchport access vlan 24
+ switchport mode access
+ switchport voice vlan 7
+ switchport port-security maximum 3
+ switchport port-security
+ switchport port-security aging time 2
+ switchport port-security violation restrict
+ switchport port-security aging type inactivity
+ mls qos trust cos
+ spanning-tree portfast
+ spanning-tree bpduguard enable
+!
+interface FastEthernet0/10
+ description Host/IP Phone
+ switchport access vlan 24
+ switchport mode access
+ switchport voice vlan 7
+ switchport port-security maximum 3
+ switchport port-security
+ switchport port-security aging time 2
+ switchport port-security violation restrict
+ switchport port-security aging type inactivity
+ mls qos trust cos
+ spanning-tree portfast
+ spanning-tree bpduguard enable
+!
+interface FastEthernet0/11
+ description Host/IP Phone
+ switchport access vlan 24
+ switchport mode access
+ switchport voice vlan 7
+ switchport port-security maximum 3
+ switchport port-security
+ switchport port-security aging time 2
+ switchport port-security violation restrict
+ switchport port-security aging type inactivity
+ mls qos trust cos
+ spanning-tree portfast
+ spanning-tree bpduguard enable
+!
+interface FastEthernet0/12
+ description Host/IP Phone
+ switchport access vlan 24
+ switchport mode access
+ switchport voice vlan 7
+ switchport port-security maximum 3
+ switchport port-security
+ switchport port-security aging time 2
+ switchport port-security violation restrict
+ switchport port-security aging type inactivity
+ mls qos trust cos
+ spanning-tree portfast
+ spanning-tree bpduguard enable
+!
+interface FastEthernet0/13
+ description Host/IP Phone
+ switchport access vlan 24
+ switchport mode access
+ switchport voice vlan 7
+ switchport port-security maximum 3
+ switchport port-security
+ switchport port-security aging time 2
+ switchport port-security violation restrict
+ switchport port-security aging type inactivity
+ mls qos trust cos
+ spanning-tree portfast
+ spanning-tree bpduguard enable
+!
+interface FastEthernet0/14
+ description Host/IP Phone
+ switchport access vlan 24
+ switchport mode access
+ switchport voice vlan 7
+ switchport port-security maximum 3
+ switchport port-security
+ switchport port-security aging time 2
+ switchport port-security violation restrict
+ switchport port-security aging type inactivity
+ mls qos trust cos
+ spanning-tree portfast
+ spanning-tree bpduguard enable
+!
+interface FastEthernet0/15
+ description Host/IP Phone
+ switchport access vlan 24
+ switchport mode access
+ switchport voice vlan 7
+ switchport port-security maximum 3
+ switchport port-security
+ switchport port-security aging time 2
+ switchport port-security violation restrict
+ switchport port-security aging type inactivity
+ mls qos trust cos
+ spanning-tree portfast
+ spanning-tree bpduguard enable
+!
+interface FastEthernet0/16
+ description Host/IP Phone
+ switchport access vlan 24
+ switchport mode access
+ switchport voice vlan 7
+ switchport port-security maximum 3
+ switchport port-security
+ switchport port-security aging time 2
+ switchport port-security violation restrict
+ switchport port-security aging type inactivity
+ mls qos trust cos
+ spanning-tree portfast
+ spanning-tree bpduguard enable
+!
+interface FastEthernet0/17
+ description Host/IP Phone
+ switchport access vlan 24
+ switchport mode access
+ switchport voice vlan 7
+ switchport port-security maximum 3
+ switchport port-security
+ switchport port-security aging time 2
+ switchport port-security violation restrict
+ switchport port-security aging type inactivity
+ mls qos trust cos
+ spanning-tree portfast
+ spanning-tree bpduguard enable
+!
+interface FastEthernet0/18
+ description Host/IP Phone
+ switchport access vlan 24
+ switchport mode access
+ switchport voice vlan 7
+ switchport port-security maximum 3
+ switchport port-security
+ switchport port-security aging time 2
+ switchport port-security violation restrict
+ switchport port-security aging type inactivity
+ mls qos trust cos
+ spanning-tree portfast
+ spanning-tree bpduguard enable
+!
+interface FastEthernet0/19
+ description Host/IP Phone
+ switchport access vlan 24
+ switchport mode access
+ switchport voice vlan 7
+ switchport port-security maximum 3
+ switchport port-security
+ switchport port-security aging time 2
+ switchport port-security violation restrict
+ switchport port-security aging type inactivity
+ mls qos trust cos
+ spanning-tree portfast
+ spanning-tree bpduguard enable
+!
+interface FastEthernet0/20
+ description Host/IP Phone
+ switchport access vlan 24
+ switchport mode access
+ switchport voice vlan 7
+ switchport port-security maximum 3
+ switchport port-security
+ switchport port-security aging time 2
+ switchport port-security violation restrict
+ switchport port-security aging type inactivity
+ mls qos trust cos
+ spanning-tree portfast
+ spanning-tree bpduguard enable
+!
+interface FastEthernet0/21
+ description Host/IP Phone
+ switchport access vlan 24
+ switchport mode access
+ switchport voice vlan 7
+ switchport port-security maximum 3
+ switchport port-security
+ switchport port-security aging time 2
+ switchport port-security violation restrict
+ switchport port-security aging type inactivity
+ mls qos trust cos
+ spanning-tree portfast
+ spanning-tree bpduguard enable
+!
+interface FastEthernet0/22
+ description Host/IP Phone
+ switchport access vlan 24
+ switchport mode access
+ switchport voice vlan 7
+ switchport port-security maximum 3
+ switchport port-security
+ switchport port-security aging time 2
+ switchport port-security violation restrict
+ switchport port-security aging type inactivity
+ mls qos trust cos
+ spanning-tree portfast
+ spanning-tree bpduguard enable
+!
+interface FastEthernet0/23
+ description Host/IP Phone
+ switchport access vlan 24
+ switchport mode access
+ switchport voice vlan 7
+ switchport port-security maximum 3
+ switchport port-security
+ switchport port-security aging time 2
+ switchport port-security violation restrict
+ switchport port-security aging type inactivity
+ mls qos trust cos
+ spanning-tree portfast
+ spanning-tree bpduguard enable
+!
+interface FastEthernet0/24
+ description Host/IP Phone
+ switchport access vlan 24
+ switchport mode access
+ switchport voice vlan 7
+ switchport port-security maximum 3
+ switchport port-security
+ switchport port-security aging time 2
+ switchport port-security violation restrict
+ switchport port-security aging type inactivity
+ mls qos trust cos
+ spanning-tree portfast
+ spanning-tree bpduguard enable
+!
+interface GigabitEthernet0/1
+ description ***Uplink***
+ switchport mode trunk
+ mls qos trust cos
+ storm-control broadcast level 20.00
+ storm-control action shutdown
+ ip dhcp snooping limit rate 100
+ ip dhcp snooping trust
+!
+interface GigabitEthernet0/2
+ description ***Uplink***
+ switchport mode trunk
+ mls qos trust cos
+ storm-control broadcast level 20.00
+ storm-control action shutdown
+ ip dhcp snooping limit rate 100
+ ip dhcp snooping trust
+!
+interface Vlan1
+ no ip address
+ no ip route-cache
+ shutdown
+!
+interface Vlan73
+ ip address 172.17.73.142 255.255.255.0
+ no ip route-cache
+!
+ip default-gateway 172.17.73.254
+ip http server
+ip http secure-server
+snmp-server community kaktus RO
+!
+control-plane
+!
+!
+line con 0
+line vty 0 4
+ password ShdK7115
+ login
+line vty 5 15
+ password ShdK7115
+ login
+!
+end
+
+</FORM><HR>
+</PRE></BODY></HTML>
+
